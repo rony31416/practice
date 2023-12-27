@@ -1,10 +1,10 @@
+//https://cses.fi/problemset/task/1192
 #include<bits/stdc++.h>
 using namespace std;
 typedef  long long int          ll ;
 #define  nl                    "\n";
-
 int n,m;
-char ar[1005][1005];
+char ar[1005][1005];//,tra[200005],order;
 int vis[1005][1005];
 
 int dx[] = {-1,0,1,0};
@@ -17,19 +17,19 @@ bool isvalid(int x,int y)
     if(vis[x][y] == 1 || ar[x][y] == '#') return false;
 
     return true;
+
 }
 
 void dfs(int x,int y)
 {
-        vis[x][y] = 1;
-
-        for(int i = 0 ; i < 4 ; i++)
+    vis[x][y] = 1;
+    for(int i = 0 ; i < 4 ; i++)
+    {
+        if(isvalid(x+dx[i],y+dy[i]))
         {
-                if(isvalid(x+dx[i],y+dy[i]))
-                {
-                    dfs(x+dx[i],y+dy[i]);
-                }
+            dfs(x+dx[i],y+dy[i]);
         }
+    }
 }
 /*
 void dfs1(int node)
@@ -48,28 +48,25 @@ int main()
 {
 
     cin>>n>>m;
-
     for(int i = 1 ; i <= n ; i++)
-         for(int j = 1 ; j <= m ; j++)
-              cin>>ar[i][j];
-
-
+        for(int j = 1 ; j <= m ; j++)
+            cin>>ar[i][j];
     int cc = 0;
-
+    // vector<int>ans;
     for(int i = 1 ; i<= n ; i++)
     {
-            for(int j = 1 ; j <= m ; j++)
+        for(int j = 1 ; j <= m ; j++)
+        {
+            if(vis[i][j] == 0 and ar[i][j] == '.')
             {
-                    if(vis[i][j] == 0 and ar[i][j] == '.')
-                    {
-                            cc++;
-                            dfs(i,j);
+                cc++;
+                dfs(i,j);
 
-                    }
             }
+        }
     }
-
     cout<<cc<<nl;
+
 
     return 0;
 }
